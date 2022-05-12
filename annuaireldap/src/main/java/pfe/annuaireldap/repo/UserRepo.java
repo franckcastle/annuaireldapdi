@@ -7,8 +7,8 @@ import pfe.annuaireldap.entities.User;
 @Repository
 public interface UserRepo extends LdapRepository<User> {
     User findByGovCNRPS(String username);
-
     User findById(String id);
+    User findByUid(String uid);
 
     User findByCnLangFr(String cn);
 

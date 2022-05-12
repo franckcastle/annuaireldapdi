@@ -12,4 +12,8 @@ public interface GroupService {
     public String updateGroupWithoutDeleteMembers(GroupDto dto) throws InvalidNameException;
     public List<GroupDto> getAllGroup();
     public String updateGroupWithDeleteMembers(GroupDto dto) throws InvalidNameException;
+    // khedmet lyoum
+    public void affectUserToGroup(String req,String uid)  throws InvalidNameException;
+    public void deleteByCn(String req);
+
 }

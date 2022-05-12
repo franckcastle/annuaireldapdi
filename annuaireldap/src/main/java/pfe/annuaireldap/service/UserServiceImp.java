@@ -9,13 +9,8 @@ import pfe.annuaireldap.repo.UserRepo;
 import pfe.annuaireldap.request.UserRequest;
 import pfe.annuaireldap.util.ConvertUtilitiesUser;
 
-import javax.lang.model.element.Name;
 import javax.naming.InvalidNameException;
-import javax.naming.NamingException;
-import javax.naming.ldap.LdapName;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -31,8 +26,21 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public String addUser(UserRequest uReq) throws InvalidNameException {
-        User newUser=ConvertUtilitiesUser.convertUserRequestToUser(uReq);
+    public UserDto getUserByUid(String uid) {
+        User u = userRepo.findByUid(uid);
+        UserDto userDto= ConvertUtilitiesUser.convertUserToUserDto(u);
+        return userDto;
+    }
+
+    @Override
+    public void deleteByUserByUid(String uid) {
+        User u = userRepo.findByUid(uid);
+        userRepo.delete(u);
+    }
+
+    @Override
+    public String  addUser (UserRequest uReq) throws InvalidNameException {
+        User newUser = ConvertUtilitiesUser.convertUserRequestToUser(uReq);
         ldapTemplate.create(newUser);
         return newUser.getId().toString();
     }

@@ -10,8 +10,8 @@ import lombok.ToString;
 public class UserRequest {
     private String id;
     private String uid;
-    private String GovCNRPS;
-    private String GovCIN;
+    private String govCNRPS;
+    private String govCIN;
     private String cn;
     private String sn;
     private String givenName;

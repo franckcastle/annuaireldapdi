@@ -27,7 +27,10 @@ public class ConvertUtilitiesGroup {
         return groupDto;
     }
     public static List<GroupDto> convertListGroupToListGroupDto(List<Group> listGroup){
+
         List<GroupDto> listGroupDto = new ArrayList<GroupDto>();
+
+
         for(Group u:listGroup) {
             listGroupDto.add(ConvertGroupToGroupDto(u));
         }
@@ -59,6 +62,19 @@ public class ConvertUtilitiesGroup {
 
         }
         return group;
+    }
+
+
+
+    public static String convertNameToString(Name id) throws InvalidNameException {
+        return id.toString();
+    }
+    public static Set<String>  convertSetNameToSetString(Set<Name> setId) throws InvalidNameException{
+        HashSet<String> setIds = new HashSet<String>();
+        for(Name n:setId){
+            setIds.add(convertNameToString(n));
+        }
+        return setIds;
     }
 
 

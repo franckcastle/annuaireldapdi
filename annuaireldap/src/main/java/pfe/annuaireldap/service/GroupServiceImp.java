@@ -10,7 +10,10 @@ import pfe.annuaireldap.request.GroupRequest;
 import pfe.annuaireldap.util.ConvertUtilitiesGroup;
 
 import javax.naming.InvalidNameException;
+import javax.naming.Name;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class GroupServiceImp implements GroupService {
     @Autowired
@@ -48,5 +51,42 @@ public class GroupServiceImp implements GroupService {
     public String updateGroupWithDeleteMembers(GroupDto dto) throws InvalidNameException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void affectUserToGroup(String req,String uid) throws InvalidNameException {
+System.out.println("req "+req);
+     //   System.out.println("uid "+uid);
+
+
+        String uidString = "uid="+uid+",ou=users,dc=cni,dc=tn" ;
+       // System.out.println("UIDSTRING "+uidString);
+        String idField = "id=cn="+req ;
+        Group g = groupRepo.findByCn(req);
+
+
+       // System.out.println("g =  "+g);
+
+        GroupDto groupDto = ConvertUtilitiesGroup.ConvertGroupToGroupDto(g);
+        //System.out.println("groupDto "+groupDto);
+
+
+        Set<String> users = groupDto.getMembers() ;
+
+
+        users.add(uidString) ;
+        groupDto.setMembers(users);
+        Group gr = ConvertUtilitiesGroup.convertDtoToGroup(groupDto) ;
+
+        ldapTemplate.update(gr);
+
+        //ldapTemplate.create(groupDto);
+
+    }
+
+    @Override
+    public void deleteByCn(String req) {
+        Group groupe = groupRepo.findByCn(req);
+        groupRepo.delete(groupe);
     }
 }
